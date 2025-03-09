@@ -1,15 +1,13 @@
 public class Game {
-    private boolean gameActive;
     private final InputHandler inputHandler;
-    private Player player;
     private final NumberGenerator numberGenerator;
     private String secretNumber;
+    private int maxAttempts;
 
-    public Game(Player player) {
-        this.player = player;
-        this.gameActive = false;
+    public Game(int maxAttempts) {
         this.numberGenerator = new NumberGenerator();
         this.inputHandler = new InputHandler();
+        this.maxAttempts = maxAttempts;
     }
 
     private Pair<Integer, Integer> countBullsAndCows(String guess) {
@@ -27,18 +25,25 @@ public class Game {
     }
 
     public void run() {
-        gameActive = true;
+        System.out.println("Game has been started. Try to guess the secret number.");
         secretNumber = numberGenerator.generateNumber().toString();
-        while (gameActive) {
+        int attempts = 0;
+        while (attempts < maxAttempts) {
             System.out.println("Enter your guess: ");
             String guess = inputHandler.getInput();
             if (!inputHandler.checkInput(guess)) {
-                System.out.println("Input is incorrect. You need to enter four-digit number.\n");
+                System.out.println("Input is incorrect. You need to enter four-digit number.");
                 continue;
             }
-
+            if (secretNumber.equals(guess)) {
+                System.out.println("You win!\n");
+                return;
+            }
+            Pair<Integer, Integer> result = countBullsAndCows(guess);
+            attempts++;
+            System.out.println("Bulls: " + result.first + "\nCows: " + result.second);
+            System.out.println("Attempts left: " + (maxAttempts - attempts));
         }
+        System.out.println("You lost!\nThe secret number is: " + secretNumber);
     }
-
-
 }
