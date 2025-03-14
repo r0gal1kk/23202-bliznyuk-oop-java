@@ -1,3 +1,4 @@
+package org.bullsAndCows;
 import java.util.Scanner;
 
 public class Main {

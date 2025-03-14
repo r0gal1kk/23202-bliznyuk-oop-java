@@ -1,3 +1,5 @@
+package org.bullsAndCows;
+
 public class Game {
     private final InputHandler inputHandler;
     private final NumberGenerator numberGenerator;
