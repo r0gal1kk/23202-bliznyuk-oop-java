@@ -1,18 +1,24 @@
 package org.bullsAndCows;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class Game {
     private final InputHandler inputHandler;
     private final NumberGenerator numberGenerator;
     private String secretNumber;
-    private int maxAttempts;
+    private final GameUI gameUI;
+    private static final Logger logger = LoggerFactory.getLogger(Game.class);
 
-    public Game(int maxAttempts) {
+    public Game() {
         this.numberGenerator = new NumberGenerator();
         this.inputHandler = new InputHandler();
-        this.maxAttempts = maxAttempts;
+        gameUI = new GameUI();
+        logger.debug("Game initialized.");
     }
 
     private Pair<Integer, Integer> countBullsAndCows(String guess) {
+        logger.debug("Counting bulls and cows for guess: {}", guess);
         int bulls = 0;
         int cows = 0;
         for (int i = 0; i < guess.length(); i++) {
@@ -23,29 +29,38 @@ public class Game {
                 cows++;
             }
         }
+        logger.debug("Result - Bulls: {}, Cows: {}", bulls, cows);
         return new Pair<>(bulls, cows);
     }
 
     public void run() {
-        System.out.println("Game has been started. Try to guess the secret number.");
+        logger.info("Generating secret number...");
         secretNumber = numberGenerator.generateNumber().toString();
-        int attempts = 0;
-        while (attempts < maxAttempts) {
-            System.out.println("Enter your guess: ");
+        logger.debug("Secret number: {}", secretNumber);
+
+        while (true) {
+            logger.info("Waiting for user input...");
+            gameUI.printMessage("Введите свою догадку:");
             String guess = inputHandler.getInput();
+            logger.debug("User input: {}", guess);
+
+            if (guess.equals("q")) {
+                logger.info("User quit the game...");
+                gameUI.printMessage("Загаданное число: " + secretNumber + ". Игра окончена!");
+                return;
+            }
             if (!inputHandler.checkInput(guess)) {
-                System.out.println("Input is incorrect. You need to enter four-digit number.");
+                logger.warn("Invalid input received: {}", guess);
+                gameUI.printMessage("Некорректный ввод. Введите четырёхзначное число.");
                 continue;
             }
             if (secretNumber.equals(guess)) {
-                System.out.println("You win!\n");
+                logger.info("User guessed the secret number.");
+                gameUI.printMessage("Вы угадали число!\n");
                 return;
             }
             Pair<Integer, Integer> result = countBullsAndCows(guess);
-            attempts++;
-            System.out.println("Bulls: " + result.first + "\nCows: " + result.second);
-            System.out.println("Attempts left: " + (maxAttempts - attempts));
+            gameUI.printMessage("Быки: " + result.first + "\nКоровы: " + result.second);
         }
-        System.out.println("You lost!\nThe secret number is: " + secretNumber);
     }
 }

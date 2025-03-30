@@ -1,23 +1,16 @@
 package org.bullsAndCows;
-import java.util.Scanner;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Main {
+    private static final Logger logger = LoggerFactory.getLogger(Main.class);
+
     public static void main(String[] args) {
-        System.out.println("Welcome to the 'Bulls and Cows' game!");
-        System.out.println("Enter the number of attempts: ");
-        Scanner scanner = new Scanner(System.in);
-        int maxAttempts = 0;
-        while (maxAttempts <= 0) {
-            try {
-                maxAttempts = Integer.parseInt(scanner.nextLine());
-                if (maxAttempts < 0) {
-                    System.out.println("Please enter a positive number!");
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Please enter a positive number!");
-            }
-        }
-        Game game = new Game(maxAttempts);
+        logger.info("Game started.");
+        System.out.println("Добро пожаловать в игру Быки и Коровы.");
+        Game game = new Game();
         game.run();
+        logger.info("Game finished.");
     }
 }
