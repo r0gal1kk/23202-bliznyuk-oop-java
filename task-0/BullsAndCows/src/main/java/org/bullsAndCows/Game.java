@@ -17,6 +17,13 @@ public class Game {
         logger.debug("Game initialized.");
     }
 
+    public Game(InputHandler inputHandler, NumberGenerator numberGenerator, GameUI gameUI) {
+        this.inputHandler = inputHandler;
+        this.numberGenerator = numberGenerator;
+        this.gameUI = gameUI;
+        logger.debug("Game initialized with dependencies.");
+    }
+
     private Pair<Integer, Integer> countBullsAndCows(String guess) {
         logger.debug("Counting bulls and cows for guess: {}", guess);
         int bulls = 0;
