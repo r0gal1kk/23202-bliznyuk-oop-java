@@ -8,13 +8,17 @@ import org.slf4j.LoggerFactory;
 public class NumberGenerator {
     private static final Logger logger = LoggerFactory.getLogger(NumberGenerator.class);
 
+    void shuffleList(List<Integer> list) {
+        Collections.shuffle(list);
+    }
+
     public Integer generateNumber() {
         logger.info("Generating number.");
         List<Integer> digits = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             digits.add(i);
         }
-        Collections.shuffle(digits);
+        shuffleList(digits);
         logger.debug("Generated digits: {}", digits);
 
         int firstDigit = digits.getFirst();

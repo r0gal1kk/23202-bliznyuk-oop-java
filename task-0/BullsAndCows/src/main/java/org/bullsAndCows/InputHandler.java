@@ -15,7 +15,7 @@ public class InputHandler {
 
     public String getInput() {
         String input = scanner.nextLine();
-        logger.trace("Input received: {}", input);
+        logger.debug("Input received: {}", input);
         return input;
     }
 

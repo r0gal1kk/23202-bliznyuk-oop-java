@@ -36,8 +36,8 @@ class GameTest {
     void showsBullsAndCows() {
         when(numberGenerator.generateNumber()).thenReturn(1234);
         when(inputHandler.getInput())
-                .thenReturn("1243")  // Неправильная догадка
-                .thenReturn("q");    // Выход
+                .thenReturn("1243")
+                .thenReturn("q");
         when(inputHandler.checkInput(anyString())).thenReturn(true);
 
         game.run();
