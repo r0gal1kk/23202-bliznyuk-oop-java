@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 public class NumberGenerator {
     private static final Logger logger = LoggerFactory.getLogger(NumberGenerator.class);
 
-    void shuffleList(List<Integer> list) {
+    private void shuffleList(List<Integer> list) {
         Collections.shuffle(list);
     }
 
