@@ -28,6 +28,7 @@ public class Calculator {
             while (scanner.hasNextLine()) {
                 buffer = scanner.nextLine().trim();
                 if (buffer.isEmpty() || buffer.startsWith("#")) {
+                    log.info("Skipping empty or comment line");
                     continue;
                 }
                 String[] tokens = buffer.split(" ");
