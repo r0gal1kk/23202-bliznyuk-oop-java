@@ -27,6 +27,9 @@ public class Calculator {
                 new Scanner(new InputStreamReader(System.in)) : new Scanner(new FileReader(args[0]))) {
             while (scanner.hasNextLine()) {
                 buffer = scanner.nextLine().trim();
+                if (buffer.isEmpty() || buffer.startsWith("#")) {
+                    continue;
+                }
                 String[] tokens = buffer.split(" ");
                 String commandName = tokens[0].toUpperCase();
                 String[] params = Arrays.copyOfRange(tokens, 1, tokens.length);
