@@ -25,7 +25,7 @@ public class CommandMultiplication implements ICommand {
         if (result > Double.MAX_VALUE || result < -Double.MAX_VALUE) {
             context.pushOperand(var2);
             context.pushOperand(var1);
-            throw new ArithmeticException("Subtraction is out of range");
+            throw new ArithmeticException("Multiplication is out of range");
         }
         context.pushOperand(result);
     }
