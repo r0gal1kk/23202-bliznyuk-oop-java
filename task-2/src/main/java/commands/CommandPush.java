@@ -7,6 +7,9 @@ import java.util.NoSuchElementException;
 public class CommandPush implements ICommand {
     @Override
     public void execute(Context context, String[] args) {
+        if (args.length != 1) {
+            throw new IllegalArgumentException("Push command requires 1 argument");
+        }
         Double var = context.getVariable(args[0]);
         if (var == null) {
             try {

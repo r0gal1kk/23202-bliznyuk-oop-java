@@ -15,6 +15,9 @@ public class CommandDefine implements ICommand {
 
     @Override
     public void execute(Context context, String[] args) {
+        if (args.length != 2) {
+            throw new IllegalArgumentException("Define command requires 2 arguments");
+        }
         String name;
         double value;
         try {
