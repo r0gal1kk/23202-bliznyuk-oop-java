@@ -2,15 +2,28 @@ package commands;
 
 import context.Context;
 
+import java.util.EmptyStackException;
+
 public class CommandDivision implements ICommand {
     @Override
     public void execute(Context context, String[] args) {
         if (args.length != 0) {
             throw new IllegalArgumentException("Division does not accept any arguments");
         }
-        double var1 = context.popOperand();
-        double var2 = context.popOperand();
+        Double var1 = null;
+        Double var2 = null;
+        try {
+            var1 = context.popOperand();
+            var2 = context.popOperand();
+        } catch (EmptyStackException e) {
+            if (var1 != null) {
+                context.pushOperand(var1);
+            }
+            throw new IllegalArgumentException("There is not enough operands in the stack");
+        }
         if (var2 == 0) {
+            context.pushOperand(var2);
+            context.pushOperand(var1);
             throw new ArithmeticException("Division by zero");
         }
         context.pushOperand(var1 / var2);

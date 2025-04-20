@@ -10,6 +10,7 @@ public class CommandSqrt implements ICommand {
         }
         double var = context.popOperand();
         if (var < 0) {
+            context.pushOperand(var);
             throw new IllegalArgumentException("Square root operation requires a non negative number");
         }
         context.pushOperand(Math.sqrt(var));
