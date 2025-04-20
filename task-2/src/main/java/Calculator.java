@@ -1,3 +1,4 @@
+import commands.ICommand;
 import context.Context;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -11,7 +12,13 @@ import org.slf4j.LoggerFactory;
 
 public class Calculator {
     private static final Logger log = LoggerFactory.getLogger(Calculator.class);
-    private Context context;
+    private final Context context;
+    private final CommandFactory factory;
+
+    public Calculator() {
+        context = new Context();
+        factory = new CommandFactory();
+    }
 
     public void process(String[] args) {
         log.info("Starting Calculator");
@@ -21,9 +28,21 @@ public class Calculator {
             while (scanner.hasNextLine()) {
                 buffer = scanner.nextLine().trim();
                 String[] tokens = buffer.split(" ");
-                String command = tokens[0].toUpperCase();
+                String commandName = tokens[0].toUpperCase();
                 String[] params = Arrays.copyOfRange(tokens, 1, tokens.length);
-                log.info("Got command: {} {}", command, params);
+                log.info("Got command: {} {}", commandName, params);
+                ICommand command = factory.getCommand(commandName);
+                if (command == null) {
+                    log.error("Unknown command: {}", commandName);
+                    continue;
+                }
+                try {
+                    command.execute(context, params);
+                    log.info("Command {} executed successfully", commandName);
+                }
+                catch (Exception e) {
+                    log.error("Error executing command: {}", commandName, e);
+                }
             }
         }
         catch (IOException e) {

@@ -4,6 +4,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -29,14 +30,15 @@ public class CommandFactory {
             for (String commandName : props.stringPropertyNames()) {
                 String className = props.getProperty(commandName);
                 try {
-                    Class<?> commandClass = Class.forName(className);
-                    ICommand command = (ICommand) commandClass.newInstance();
+                    ICommand command = (ICommand) Class.forName(className).getDeclaredConstructor().newInstance();
                     commands.put(commandName.toUpperCase(), command);
                     log.info("Loaded command: {} -> {}", commandName, className);
                 } catch (ClassNotFoundException e) {
                     log.error("Command class {} not found", className, e);
                 } catch (InstantiationException | IllegalAccessException e) {
                     log.error("Failed to instantiate command class {}", className, e);
+                } catch (InvocationTargetException | NoSuchMethodException e) {
+                    throw new RuntimeException(e);
                 }
             }
         } catch (IOException e) {
