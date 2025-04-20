@@ -7,10 +7,9 @@ public class Main {
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) {
-        logger.info("Game started.");
-        System.out.println("Добро пожаловать в игру Быки и Коровы.");
+        logger.info("Игра началась!");
         Game game = new Game();
         game.run();
-        logger.info("Game finished.");
+        logger.info("Игра окончена!.");
     }
 }
