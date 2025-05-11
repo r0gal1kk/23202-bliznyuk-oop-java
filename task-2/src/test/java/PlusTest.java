@@ -5,6 +5,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class PlusTest {
     private ICommand command;
     private Context context;
@@ -19,7 +22,7 @@ public class PlusTest {
     void testAddValidNumbers() {
         context.pushOperand(3.0);
         context.pushOperand(5.0);
-        String[] args = {};
+        List<String> args = Arrays.asList();
         command.execute(context, args);
         assertEquals(1, context.getSize());
         assertEquals(8.0, context.topOperand());
@@ -29,7 +32,7 @@ public class PlusTest {
     void testAddWithArguments() {
         context.pushOperand(3.0);
         context.pushOperand(5.0);
-        String[] args = {"extra"};
+        List<String> args = Arrays.asList("extra");
         assertThrows(IllegalArgumentException.class, () -> command.execute(context, args));
         assertEquals(2, context.getSize());
         assertEquals(5.0, context.topOperand());
@@ -37,7 +40,7 @@ public class PlusTest {
 
     @Test
     void testEmptyStack() {
-        String[] args = {};
+        List<String> args = Arrays.asList();
         assertThrows(IllegalArgumentException.class, () -> command.execute(context, args));
         assertTrue(context.isEmpty());
     }
@@ -45,7 +48,7 @@ public class PlusTest {
     @Test
     void testOneNumber() {
         context.pushOperand(5.0);
-        String[] args = {};
+        List<String> args = Arrays.asList();
         assertThrows(IllegalArgumentException.class, () -> command.execute(context, args));
         assertEquals(1, context.getSize());
         assertEquals(5.0, context.topOperand());
@@ -55,7 +58,7 @@ public class PlusTest {
     void testAddOverflow() {
         context.pushOperand(Double.MAX_VALUE);
         context.pushOperand(Double.MAX_VALUE);
-        String[] args = {};
+        List<String> args = Arrays.asList();
         assertThrows(ArithmeticException.class, () -> command.execute(context, args));
         assertEquals(2, context.getSize());
         assertEquals(Double.MAX_VALUE, context.topOperand());

@@ -5,7 +5,7 @@ import java.util.Scanner;
 import java.io.InputStreamReader;
 import java.io.FileReader;
 import java.io.IOException;
-
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,7 +41,8 @@ public class Calculator {
                     continue;
                 }
                 try {
-                    command.execute(context, params);
+                    List<String> paramList = Arrays.asList(params);
+                    command.execute(context, paramList);
                     log.info("Command {} executed successfully", commandName);
                 }
                 catch (Exception e) {

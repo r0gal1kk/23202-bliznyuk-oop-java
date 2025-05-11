@@ -5,6 +5,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class SqrtTest {
     private ICommand command;
     private Context context;
@@ -18,7 +21,7 @@ public class SqrtTest {
     @Test
     void testSqrtValidNumber() {
         context.pushOperand(16.0);
-        String[] args = {};
+        List<String> args = Arrays.asList();
         command.execute(context, args);
         assertEquals(1, context.getSize());
         assertEquals(4.0, context.topOperand());
@@ -27,7 +30,7 @@ public class SqrtTest {
     @Test
     void testSqrtNegativeNumber() {
         context.pushOperand(-4.0);
-        String[] args = {};
+        List<String> args = Arrays.asList();
         assertThrows(IllegalArgumentException.class, () -> command.execute(context, args));
         assertEquals(1, context.getSize());
         assertEquals(-4.0, context.topOperand());

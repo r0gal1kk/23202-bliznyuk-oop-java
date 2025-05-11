@@ -5,13 +5,13 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class CommandFactory {
     private static final Logger log = LoggerFactory.getLogger(CommandFactory.class);
-    private final Map<String, ICommand> commands = new HashMap<>();
+    private final Map<String, ICommand> commands = new ConcurrentHashMap<>();
     private static final String CONFIG_FILE = "commands.properties";
 
     public CommandFactory() {

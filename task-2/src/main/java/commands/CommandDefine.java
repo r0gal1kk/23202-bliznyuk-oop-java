@@ -1,6 +1,8 @@
 package commands;
 
 import context.Context;
+
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class CommandDefine implements ICommand {
@@ -14,20 +16,20 @@ public class CommandDefine implements ICommand {
     }
 
     @Override
-    public void execute(Context context, String[] args) {
-        if (args.length != 2) {
+    public void execute(Context context, List<String> args) {
+        if (args.size() != 2) {
             throw new IllegalArgumentException("Define command requires 2 arguments");
         }
         String name;
         double value;
         try {
-            name = args[0];
+            name = args.getFirst();
             if (!isCorrectName(name)) {
                 throw new IllegalArgumentException("Invalid variable name: " + name);
             }
-            value = Double.parseDouble(args[1]);
+            value = Double.parseDouble(args.get(1));
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("Invalid number: " + args[1]);
+            throw new IllegalArgumentException("Invalid number: " + args.get(1));
         }
         context.defineVariable(name, value);
     }
