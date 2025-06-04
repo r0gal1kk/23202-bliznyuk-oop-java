@@ -24,7 +24,9 @@ public class FactoryMonitor implements StorageListener {
     }
 
     @Override
-    public void onCarRemoved() {
-        logger.info("Car removed from storage");
+    public void onDetailRemoved(Class<?> detailClass) {
+        if (detailClass.equals(Car.class)) {
+            logger.info("Car removed from storage");
+        }
     }
 }

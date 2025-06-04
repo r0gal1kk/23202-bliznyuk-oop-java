@@ -2,5 +2,5 @@ package factory;
 
 public interface StorageListener {
     void onDetailAdded(Class<?> detailClass);
-    void onCarRemoved();
+    void onDetailRemoved(Class<?> detailClass);
 }

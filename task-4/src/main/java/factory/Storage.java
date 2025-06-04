@@ -33,9 +33,7 @@ public class Storage<T extends Product> implements Puttable<T>, Gettable<T> {
             }
             T item = items.poll();
             listener.notify();
-            if (item instanceof Car) {
-                listener.onCarRemoved();
-            }
+            listener.onDetailRemoved(item.getClass());
             return item;
         }
     }

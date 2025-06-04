@@ -17,6 +17,7 @@ public class CreateCar implements Task {
     public void execute() throws InterruptedException {
         try {
             while (!Thread.currentThread().isInterrupted()) {
+                //Thread.sleep(200);
                 Body body = (Body) detailStorages.get(Body.class).get();
                 Engine motor = (Engine) detailStorages.get(Engine.class).get();
                 Accessory accessory = (Accessory) detailStorages.get(Accessory.class).get();
